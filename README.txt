@@ -1,0 +1,166 @@
+1. Create a folder with a readme and git ignore file
+2. NPM init to get yourself a package.json and your node_modules
+3. Install all of your dependencies.
+    a. Express
+        - const app = express();
+        // allow requests to have bodys
+        - app.use(express.urlencoded({extended: true}))
+    b. Mongoose
+    c. Method Override
+        - app.use('methodOverride('_method'))
+        // allow a method to be passed in a query string to override form action
+    d. If using ES6 import Statements:
+        i. path
+        - const __dirname = path.dirname(__filename);
+        ii. {fileToUrlPath} from url
+        - const __filename = fileURLToPath(import.meta.url);
+        - TO GET FILENAME AND DIRNAME IN A MODULE WE HAVE TO SNAG THOSE INDIVIDUALLY. IMPORTING PATH DOES NOT DO THIS FOR US. DIRNAME AND FILENAME WILL BE UNDEFINED IF WE DONT DO THIS
+    e. Ejs
+4. Create your app/index js, and import all of your modules
+5. Tell your app to listen on a port locally for development
+    - app.listen(port, callback);
+    - make an app.get() to go ahead and check if everything is A OK at this point
+6. Make a views directory for you views engine (ejs)
+    a. set views engine - app.set('view engine', 'ejs')
+    b. set view directory -  app.set('views', path.join(__dirname, 'views'))
+7. Make the models/schemas for your db
+    - const yourSchema = new Mongoose.Schema({keyvaluepairsinhere})
+    - you may need to export your shema to another file
+    a. connect to the Database
+    async function connectDb() {
+        try {
+            await mongoose.connect("mongodb://localhost:27017/yelp-camp");
+            console.log("DATABASE CONNECTED");
+            } catch (e) {
+            console.log("CONNECTION ERROR", e);
+                }
+            }
+            connectDb();
+8. Set up your basic routes for CRUD
+    a. You are going to have create, read(show), update, delete
+    b. The most important is consistent url pattern associated with HTTP verbs
+        i. GET /things
+        ii. GET /things/{id} (also called SHOW route)
+        iii. PATCH /things/{id}
+        iv. DELETE /things/{id}
+        v. POST /things/new
+    c. HOT TAKE, 
+        i. when passing data from forms. Your input names can be name="model[parameter]"
+            if you want the req.body.model to actually represent what you passed
+            const objectPassed = req.body.model
+            ii. otherwise, you can name="param", and get them individually from req.body.paramName
+9. Adding some Basic Styles
+    a. Ejs has an extension called ejs-mate. It lets you abstract a boilerplate for your header/footer
+        - make your boilerplate in a layouts folder
+        - add <% - body -> where where page content will go
+        - make a view that contains the body and include the path to the boilerplate at the top
+        - <% layout('pathtoboilerplate') %>
+    b. If you are using <%- body -> put a container around it in the boilerplate
+    c. Create your partials
+        - create a folder in your views directory for your partials
+        - include a partial on the boilerplate by placing 
+            include('pathtopartial') wherever you want that content
+10. Error Handling
+    a. Your project really needs to have both client side and server side validation
+    b. Bootstrap
+        i. Tell the browser not to validate the form
+        ii. add required attribute to your inputs
+        iii. you will need to add in boostraps custom form validation script. 
+        iv. add divs with .valid-feedback that appear when input meets requirements
+    c. Error Class
+        i. Create a util folder for your error stuff
+        ii. Create an error Class
+            - class ExpressError extends Error {
+                constructor(statusCode, message) {
+                    super(); <----- you need super to change any of the values of the class you extend.
+                    this.statusCode = statusCode;
+                    this.message = message;
+                    }
+                }
+        iii. Write a function that accepts a function as an arg. The function will
+                return another function that calls the function that was passed in, and will 
+                catch any errors on the passed in function and pass them into next. 
+                - function catchAsync(fn) {
+                    return (req, res, next) => {
+                    fn(req, res, next).catch(next(e));
+                    };
+                }
+    d. More Error Handling
+        i. use an app.all('*') at the end of your file to catch any req routes that dont exist
+            You can throw an error here, and pass it into next
+        ii. app.use() afterwards will catch the error you threw into next. 
+        iii. After you set that up, you can throw an error in any route, and it will
+                get passed to the app.use error handler on the bottom. 
+    e. Defining Error Template
+        i. You can throw this in the top level of views folder, since it really is
+            another page you are going to show your peeps
+11. Validation
+    a. JOI Schema Validations
+        i. We need client AND server side validation. 
+        ii. JOI works by writing a schema for a js object. It will validate your request before
+            anything gets to mongoose if you set the schema for the req body. 
+        iii. Define a schema, set it to a var, and then call validate on the object that needs to be validated
+            -     const campgroundSchema = JOI.object({
+                campground: JOI.object({
+                        title: Joi.string().required(), <-------- Make sure youre keys match the keys passed in req.body
+                        price: Joi.number().required().min(0),
+                    }).required(),
+                });
+                const result = campgroundSchema.validate(req.body);
+        iv. We will want to destructure an error out of the validate(obj) method if there is one.
+            JOI errors return 'details' which is an array of objects that contain a message. 
+            Therefore, we would check for an error, and if there is one, map over the details array, 
+            return the messages, and join them at the comma that seperates them. 
+                -  const { error } = campgroundSchema.validate(req.body);
+                        if (error) {
+                            const msg = error.details.map((el) => el.message).join(",");
+                            throw new ExpressError(400, msg);
+                        }
+    b. JOI validation middleware
+        i. Movie your code for req schema validation in to its own middleware function
+        ii. You also dont want to define your Schema everytime. Move your schema
+            definition used in the middleware into a different file if you can. 
+12. Making a review module for our camps
+    a. Reviews are probably going to be a one to many relationship. For this app,
+        we are going to embed a reference to the child (review), on the parent (campground)               
+    b. After you define a model, you need to decide where you will make that new data and add that route
+    c. Once the form is added, set up the form to hit your route. Confirm the data is being submitted and is
+        being added to the Database
+    d. Add another validation schema, and create that middleware to pass through to our new route.
+    e. displaying those reviews is as easy as populating them on the campground show page.
+        IMPORT NOTE
+            - At this point, some of this stuff is getting repetitive. Basically, for every new 'Thing' you want to add, 
+                1. Find out how it relates to other things and how you want to display it
+                2. Create your schema and model
+                    - add references to the parent and childs as necessary
+                3. add a route to create the thing
+                4. add a template or to another template for where you want to create it and show it
+                    - make sure this works
+                5. pass your error handler onto those routes or make one special if needed
+                6. create some sort of validation schema for the data for the Thing
+                7. Make the thing look nicer once its all working. 
+                8. add the ability to delete and update the thing if you want
+                    - if parent/child delete all references
+                9. add what happens to parent/child once thing is deleted
+    f. Say we want to delete a child, but there is a reference to it in an array on the parent?
+       The recommended solution is pull:
+        - findByIdAndUpdate(parentId, { $pull: { childarr: childId },
+    g. Deleting the parent can make use of a middleware on the model to get rid of children
+        - Whatever method you are using to find the parent, will have an associated middleware
+          type it triggers. Document, Query, Pre, and Post.
+        - SPECIFIC MIDDLEWARE METHODS ARE ONLY TRIGGERED BY THE SPECIFIC METHOD BEING USED TO FIND DOCUMENT
+13. Splitting up our routes
+    a. To split up routes, make a folder called routes, and some files for your route categories
+    b. set const router = express.Router() and export default router.
+    c. Import that router into your app file, with the prefix for that route category
+        - import catRouter from './pathtocatroutefile'
+        - app.use('/category', catRouter)
+    d. Your imports will be messed up now. You will have to bring everything you are 
+        using into your router file. 
+    e. Also, make sure to remove '/category' from the routes in your new router file
+    f. if you have ids in your base urls for your router, you will need to pass 
+        this option to your express router instance:
+         - const router = express.Router({mergeParams: true})
+           - This option merges the params in your base url with the params being
+             being defined in your routes. You cant access params in your base url
+            for your router by default. 
