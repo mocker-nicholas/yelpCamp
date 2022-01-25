@@ -36,6 +36,8 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
 // use method-override
 app.use(methodOverride("_method"));
+// serve static assests
+app.use(express.static(path.join(__dirname, "public")));
 // campground router
 app.use("/campgrounds", campgroundsRouter);
 // reviews router

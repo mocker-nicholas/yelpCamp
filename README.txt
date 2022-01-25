@@ -164,3 +164,6 @@
            - This option merges the params in your base url with the params being
              being defined in your routes. You cant access params in your base url
             for your router by default. 
+14. Serving static assets
+    a. You can use app.use(app.static()) to serve static assets from you main app file
+        - app.use(app.static('filetoserve'))
