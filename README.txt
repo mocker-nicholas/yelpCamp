@@ -193,4 +193,21 @@
     - extract your flash messages into a partial
     -  You will want to check to see if the key you assigned (success or error)
         contains an empty array in your template, before displaying your error partial. 
-
+    b. To put in a partial for a flash error, we can use the same partial as above
+        - we will want to check for an error in that partial, and display it if their is one
+        - then we can redirect to a different page (with the error partial included)
+            i. Think about what routes could have an error. If you are finding something, 
+                you could pass in a flash error if that item is not found. 
+                 -router.get(
+                    "/:id",
+                    catchAsync(async (req, res) => {
+                        const thing = await Thing.findById(req.params.id).populate(
+                            "things"
+                        );
+                        if (!thing) {
+                            req.flash("error", "Thing not found");
+                            return res.redirect("/things");
+                        }
+                        res.render("things/show", { thing });
+                    })
+                    );
