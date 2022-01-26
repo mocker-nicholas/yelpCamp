@@ -8,6 +8,8 @@ import ejsMate from "ejs-mate";
 import ExpressError from "./util/expresserror.js";
 import campgroundsRouter from "./routes/campgrounds.js";
 import reviewsRouter from "./routes/reviews.js";
+import session from "express-session";
+import flash from "connect-flash";
 
 // set express to a variable for initialization
 const app = express();
@@ -38,6 +40,19 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 // serve static assests
 app.use(express.static(path.join(__dirname, "public")));
+// session
+const sessionConfig = {
+  secret: "mysecret",
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+  },
+};
+
+app.use(session(sessionConfig));
 // campground router
 app.use("/campgrounds", campgroundsRouter);
 // reviews router

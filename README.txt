@@ -167,3 +167,14 @@
 14. Serving static assets
     a. You can use app.use(app.static()) to serve static assets from you main app file
         - app.use(app.static('filetoserve'))
+15. Add session storage to your app
+    a. npm i install express-session
+    b. define a config object to pass into your session initialization
+       - app.use(session(sessionConfig));
+          i. THIS SHOULD COME BEFORE YOUR ROUTES or it will be missed
+    c. You can pass in a cookie object to your config for some settings:
+        i. {
+                httpOnly: true, <-- prevent cross site scripting
+                expires: Date.now() + 1000 * 60 * 60 * 24 * 7, <-- Expires a week from now
+                maxAge: 1000 * 60 * 60 * 24 * 7, <-- one week
+            },
