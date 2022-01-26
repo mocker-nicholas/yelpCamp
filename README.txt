@@ -178,3 +178,16 @@
                 expires: Date.now() + 1000 * 60 * 60 * 24 * 7, <-- Expires a week from now
                 maxAge: 1000 * 60 * 60 * 24 * 7, <-- one week
             },
+16. Setting up Flash
+    a. npm i Flash
+        - app.use(flash());
+    b. to use flash in a route:
+        - req.flash('key', 'value message')
+        - You then need to pass it into whatever route you are using that message on.
+          so if you are redirecting, pass it into the route you are redirecting to.
+        - A better way to do this is to define a middleware that will look for a flash message.
+           You can add your req.flash.success key to res.locals.success. 
+           - this adds the contents of our flash success to the locals object of every response
+           - you have access to this in your templates automtically.
+
+

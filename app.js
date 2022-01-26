@@ -51,8 +51,14 @@ const sessionConfig = {
     maxAge: 1000 * 60 * 60 * 24 * 7,
   },
 };
-
 app.use(session(sessionConfig));
+// enable flash
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success = req.flash("success");
+  res.locals.error = req.flash("error");
+  return next();
+});
 // campground router
 app.use("/campgrounds", campgroundsRouter);
 // reviews router
