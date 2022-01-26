@@ -189,5 +189,8 @@
            You can add your req.flash.success key to res.locals.success. 
            - this adds the contents of our flash success to the locals object of every response
            - you have access to this in your templates automtically.
-
+17. Making a partial for flash
+    - extract your flash messages into a partial
+    -  You will want to check to see if the key you assigned (success or error)
+        contains an empty array in your template, before displaying your error partial. 
 
