@@ -64,6 +64,7 @@ app.use(methodOverride("_method"));
 app.use(express.static(path.join(__dirname, "public")));
 // enable flash
 app.use(flash());
+// pass flash message onto req if exists. It is then passed to boilerplate
 app.use((req, res, next) => {
   res.locals.success = req.flash("success");
   res.locals.error = req.flash("error");

@@ -237,4 +237,15 @@
         - Make a new router for all of your registration routes. We can call it users
     e. We will need to serve a form to sign up, and login, and make request routes to send 
         the information to create an account, or login to app. 
+        i. on the register post route:
+            - Grab you req.body params you need
+            - make a user with just email and username. Dont make password yet
+            - pass the user into the Model.register() method with the password. 
+                - this will make sure the password is salted, hashed, and added to your user
+            - Flash a message saying it worked <--- Flash is on the request, and is automatically passed onto the ejs template
+            - redirect somewhere else
+            - Wrap catchAsync around this to pass to default error handler for 
+                otherwise unhandled errors.
+            - Otherwise, we can throw our own try/catch in here to display a flash error message
+    
     
