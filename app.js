@@ -10,6 +10,9 @@ import campgroundsRouter from "./routes/campgrounds.js";
 import reviewsRouter from "./routes/reviews.js";
 import session from "express-session";
 import flash from "connect-flash";
+import passport from "passport";
+import LocalStrategy from "passport-local";
+import User from "./models/user.js";
 
 // set express to a variable for initialization
 const app = express();
@@ -34,12 +37,6 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 // set views directory
 app.set("views", path.join(__dirname, "views"));
-// let our reqs have bodys
-app.use(express.urlencoded({ extended: true }));
-// use method-override
-app.use(methodOverride("_method"));
-// serve static assests
-app.use(express.static(path.join(__dirname, "public")));
 // session
 const sessionConfig = {
   secret: "mysecret",
@@ -52,6 +49,18 @@ const sessionConfig = {
   },
 };
 app.use(session(sessionConfig));
+// tell our app to use passport
+app.use(passport.initialize());
+app.use(passport.session());
+passport.use(new LocalStrategy(User.authenticate()));
+passport.serializeUser(User.serializeUser());
+passport.deserializeUser(User.deserializeUser());
+// let our reqs have bodys
+app.use(express.urlencoded({ extended: true }));
+// use method-override
+app.use(methodOverride("_method"));
+// serve static assests
+app.use(express.static(path.join(__dirname, "public")));
 // enable flash
 app.use(flash());
 app.use((req, res, next) => {

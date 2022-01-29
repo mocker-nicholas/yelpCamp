@@ -77,6 +77,10 @@
                     this.message = message;
                     }
                 }
+             - Note: you cant throw this error normally in an async function. you would have
+                to return next(error) or express breaks. Write a higher order function to catch
+                any error in an async function, and pass it into next, so you dont have to 
+                write this out individually for every route.
         iii. Write a function that accepts a function as an arg. The function will
                 return another function that calls the function that was passed in, and will 
                 catch any errors on the passed in function and pass them into next. 
@@ -85,6 +89,8 @@
                     fn(req, res, next).catch(next(e));
                     };
                 }
+                - this will catch errors in async functions, and will pass them to our app.use() error
+                    handler at the end of the file. 
     d. More Error Handling
         i. use an app.all('*') at the end of your file to catch any req routes that dont exist
             You can throw an error here, and pass it into next
@@ -209,5 +215,22 @@
                             return res.redirect("/things");
                         }
                         res.render("things/show", { thing });
-                    })
+                        })
                     );
+18. Yelpcamp Authentication (passport)
+    a. Using a tool like passport allows us to add in third party authentication
+    (google, twitter, facebook) really easily. 
+    b. The first thing we need to do is set up a model
+        - after we set up our schema Schema.plugin(passportLocalMongoose) will
+        give us our username and password fields without any additional work or 
+        validation.
+    c. Configure app for passport:
+        i. Include passport and passport local in main file
+        ii. Tell app to use passport.intialize() and passport.session()
+            - make sure normal session is called before passport session
+        iii. Tell passport to use a local strategy to authenticate username
+            - passport.use(new LocalStrategy(User.authenticate()));
+        iv. Tell passport how to store a user in the session
+            - passport.serializeUser(User.serializeUser());
+        v. Tell passport how to get a user out of the session
+            - 
