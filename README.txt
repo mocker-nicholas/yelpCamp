@@ -262,4 +262,16 @@
     g. Logout: Passport gives us a method called .logout()
       i. Meaning we only need to make a route, and a way to hit that route in our
         app for logging out.
+      ii. After logout is added, now we need to add our links for hitting these
+            log in and log out routes. We will do it in navbar here. 
+      iii. We definitely dont want to show all of the Login, logout, register buttons
+            or links all the time. We will want to only show what is relevant to a users
+            loggedin status
+                - Passport gives us a param on the req called user we can use to
+                    verify login status
+                - Similar how we pass in our flash messages to every template, lets
+                  set another global property in that middleware called req.user. We will
+                  then have access to this property on our ejs templates
+                - Simply set up some logic on the navbar to check for currentUser, 
+                    and display the links that are appropriate for loggedin or not
     
