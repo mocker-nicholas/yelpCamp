@@ -8,6 +8,7 @@ import ejsMate from "ejs-mate";
 import ExpressError from "./util/expresserror.js";
 import campgroundsRouter from "./routes/campgrounds.js";
 import reviewsRouter from "./routes/reviews.js";
+import usersRouter from "./routes/users.js";
 import session from "express-session";
 import flash from "connect-flash";
 import passport from "passport";
@@ -72,6 +73,8 @@ app.use((req, res, next) => {
 app.use("/campgrounds", campgroundsRouter);
 // reviews router
 app.use("/campgrounds/:id/reviews", reviewsRouter);
+// users router
+app.use("/", usersRouter);
 
 app.get("/", (req, res) => {
   res.render("home");

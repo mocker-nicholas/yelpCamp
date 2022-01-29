@@ -233,4 +233,8 @@
         iv. Tell passport how to store a user in the session
             - passport.serializeUser(User.serializeUser());
         v. Tell passport how to get a user out of the session
-            - 
+    d. Registration
+        - Make a new router for all of your registration routes. We can call it users
+    e. We will need to serve a form to sign up, and login, and make request routes to send 
+        the information to create an account, or login to app. 
+    
