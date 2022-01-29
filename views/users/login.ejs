@@ -1,6 +1,6 @@
 <%layout('layouts/boilerplate')%>
-<h1>Register</h1>
-<form class="validated-form" action="/register" method="POST" novalidate>
+<h1>Login</h1>
+<form class="validated-form" action="/login" method="POST" novalidate>
   <div class="mb-3">
     <label class="form-label" for="username">Username</label>
     <div class="input-group">
@@ -12,22 +12,6 @@
         name="username"
         aria-label="username"
         aria-describedby="username-label"
-        required
-      />
-      <div class="valid-feedback">Looks Good!</div>
-    </div>
-  </div>
-  <div class="mb-3">
-    <label class="form-label" for="email">Email Address</label>
-    <div class="input-group">
-      <input
-        type="text"
-        class="form-control"
-        placeholder="Email Address"
-        id="email"
-        name="email"
-        aria-label="email"
-        aria-describedby="email-label"
         required
       />
       <div class="valid-feedback">Looks Good!</div>

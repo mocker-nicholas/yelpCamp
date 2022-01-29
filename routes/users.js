@@ -1,6 +1,7 @@
 import express from "express";
 import User from "../models/user.js";
 import catchAsync from "../util/catchasync.js";
+import passport from "passport";
 
 const router = express.Router();
 
@@ -19,10 +20,25 @@ router.post(
       req.flash("error", e.message);
       return res.redirect("register");
     }
-    console.log(registeredUser);
     req.flash("success", "Welcome To Yelp Camp!");
     res.redirect("/campgrounds");
   })
+);
+
+router.get("/login", (req, res) => {
+  res.render("users/login");
+});
+
+router.post(
+  "/login",
+  passport.authenticate("local", {
+    failureFlash: true,
+    failureRedirect: "/login",
+  }),
+  async (req, res) => {
+    req.flash("success", "Welcome Back!");
+    res.redirect("/campgrounds");
+  }
 );
 
 export default router;

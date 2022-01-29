@@ -235,7 +235,7 @@
         v. Tell passport how to get a user out of the session
     d. Registration
         - Make a new router for all of your registration routes. We can call it users
-    e. We will need to serve a form to sign up, and login, and make request routes to send 
+    e. Register: We will need to serve a form to sign up, and login, and make request routes to send 
         the information to create an account, or login to app. 
         i. on the register post route:
             - Grab you req.body params you need
@@ -247,5 +247,11 @@
             - Wrap catchAsync around this to pass to default error handler for 
                 otherwise unhandled errors.
             - Otherwise, we can throw our own try/catch in here to display a flash error message
-    
+    f. Login: In our login route:
+        i. Passport gives us a login middleware we can use Passport.authenticate
+            - passport.authenticate("local", {
+                    failureFlash: true,
+                    failureRedirect: "/login",
+                }),
+        ii. 
     
