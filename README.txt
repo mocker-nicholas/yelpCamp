@@ -253,5 +253,10 @@
                     failureFlash: true,
                     failureRedirect: "/login",
                 }),
-        ii. 
+        ii. Passport uses our session through serializeUser to keep track of
+            a user's signed in status. There is a method called isAuthenticated on the req
+            itself (added by passport).
+            - to protect routes, we can check to see if that isAuthenticated method on the request
+            - rather than doing that on every route, lets put it in a middleware and pass
+                that into a route.
     
