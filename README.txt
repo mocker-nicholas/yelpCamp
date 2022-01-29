@@ -274,4 +274,18 @@
                   then have access to this property on our ejs templates
                 - Simply set up some logic on the navbar to check for currentUser, 
                     and display the links that are appropriate for loggedin or not
-    
+    h. Lets make a new user auto login when they register
+        i. Passport gives us a req.login() method we can use when we register A
+            user. 
+        ii. the login method cannot be awaited becuase it requires a callback. 
+            - for the callback, we can just check for an error. If there is 
+              one return next(e), if not, send our flash message and redirect.
+    i. ReturnTo behavior: if we force a login, lets send the user back to where they
+        were trying to go when the login was forced.
+        i. First, we have to keep track of where they were. 
+            - When we check for authentication, add the current url to the session
+                by tacking on some req params. req.path and *req.url*
+        ii. Add req.session.returnTo = req.originalUrl; to your isLoggedIn middleware
+        iii. Then, when a user logs in from the forced login screen, 
+                if that param exists, redirect to it.
+                - delete the req.session.returnTo param after you set the redirecturl
