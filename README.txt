@@ -259,4 +259,7 @@
             - to protect routes, we can check to see if that isAuthenticated method on the request
             - rather than doing that on every route, lets put it in a middleware and pass
                 that into a route.
+    g. Logout: Passport gives us a method called .logout()
+      i. Meaning we only need to make a route, and a way to hit that route in our
+        app for logging out.
     
