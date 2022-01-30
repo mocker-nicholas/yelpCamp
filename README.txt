@@ -326,4 +326,33 @@
                 }
                 next();
                 };
-    d. 
+    d. Next, lets add a reference to a user on the review itself. 
+        i. The first bit will be to hide the review form if there is no currentUser
+        ii. Then, put the isLoggedIn middleware on our review routes that need it
+        iii. When a review is created, set the author parameter on the request to 
+               - review.author = req.user._id
+        iv. When you show reviews on the campground page, populate the review details
+            to show the author of each review
+            - this goes back to where we populate all of the reviews for 
+              a campground on our campground show route. We want to pass in an 
+              object to our populate('reviews') to populate the info for the author
+              of each review.
+            - this is called a nested populate
+            - const campground = await Campground.findById(req.params.id)
+                    .populate({
+                        path: "reviews",
+                        populate: {
+                            path: "author",
+                        },
+                    })
+                    .populate("author");
+            - To show the review owner on the page just add it to where you generate the reviews
+                for each campground.
+            - When you do that, throw in some logic to check to see if current user._id matches
+                the review author._id, if not dont render that display button.
+            - Next, youll want a middleware to protect the review delete route. Check to see if the
+                logged in user._id is the same as the author on the review. 
+
+            
+
+            
