@@ -1,4 +1,8 @@
-const isLoggedIn = (req, res, next) => {
+import { campgroundSchema, reviewSchema } from "./schemas.js";
+import Campground from "./models/campground.js";
+import ExpressError from "./util/expresserror.js";
+
+export const isLoggedIn = (req, res, next) => {
   if (!req.isAuthenticated()) {
     req.session.returnTo = req.originalUrl;
     req.flash("error", "You must be signed in first!");
@@ -7,4 +11,32 @@ const isLoggedIn = (req, res, next) => {
   next();
 };
 
-export default isLoggedIn;
+export const validateCampground = (req, res, next) => {
+  const { error } = campgroundSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, msg);
+  } else {
+    next();
+  }
+};
+
+export const isAuthor = async (req, res, next) => {
+  const { id } = req.params;
+  const campground = await Campground.findById(id);
+  if (!campground.author.equals(req.user._id)) {
+    req.flash("error", "You do not have permission to do that");
+    return res.redirect(`/campgrounds/${id}`);
+  }
+  return next();
+};
+
+export const validateReview = (req, res, next) => {
+  const { error } = reviewSchema.validate(req.body);
+  if (error) {
+    const msg = error.details.map((el) => el.message).join(",");
+    throw new ExpressError(400, msg);
+  } else {
+    next();
+  }
+};

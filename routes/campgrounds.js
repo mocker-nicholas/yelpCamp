@@ -1,20 +1,8 @@
 import express from "express";
 const router = express.Router();
 import catchAsync from "../util/catchasync.js";
-import ExpressError from "../util/expresserror.js";
 import Campground from "../models/campground.js";
-import { campgroundSchema } from "../schemas.js";
-import isLoggedIn from "../middleware.js";
-
-const validateCampground = (req, res, next) => {
-  const { error } = campgroundSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, msg);
-  } else {
-    next();
-  }
-};
+import { isLoggedIn, validateCampground, isAuthor } from "../middleware.js";
 
 router.get(
   "/",
@@ -61,7 +49,9 @@ router.get(
 router.get(
   "/:id/edit",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res, next) => {
+    const { id } = req.params;
     const campground = await Campground.findById(req.params.id);
     if (!campground) {
       req.flash("error", "Campground not found");
@@ -75,6 +65,7 @@ router.put(
   "/:id",
   isLoggedIn,
   validateCampground,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     // because our form name is submitting information in a 'campground' object (name="campground[param]")
@@ -90,6 +81,7 @@ router.put(
 router.delete(
   "/:id",
   isLoggedIn,
+  isAuthor,
   catchAsync(async (req, res) => {
     const { id } = req.params;
     const campground = await Campground.findByIdAndDelete(id);

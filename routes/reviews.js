@@ -1,21 +1,10 @@
 import express from "express";
 import catchAsync from "../util/catchasync.js";
-import ExpressError from "../util/expresserror.js";
-import { reviewSchema } from "../schemas.js";
 import Campground from "../models/campground.js";
 import Review from "../models/review.js";
+import { validateReview } from "../middleware.js";
 
 const router = express.Router({ mergeParams: true });
-
-const validateReview = (req, res, next) => {
-  const { error } = reviewSchema.validate(req.body);
-  if (error) {
-    const msg = error.details.map((el) => el.message).join(",");
-    throw new ExpressError(400, msg);
-  } else {
-    next();
-  }
-};
 
 router.post(
   "/",

@@ -314,4 +314,16 @@
                 - in our conditional, we have to check if a user exists before continuing on to check
                   the user id. If we try to check the id first and no one is signed in, it will be UNDEFINED
                   and will break everything.
-        ii. 
+        ii. To protect the routes themselves for deleting and editing, we need to find
+            the campground, compare the author to logged in user, then send the request.
+        iii. Because there are so many routes we want to protect this way, we can move this into
+             a middleware.
+             - const isLoggedIn = (req, res, next) => {
+                if (!req.isAuthenticated()) {
+                    req.session.returnTo = req.originalUrl;
+                    req.flash("error", "You must be signed in first!");
+                    return res.redirect("/login");
+                }
+                next();
+                };
+    d. 
