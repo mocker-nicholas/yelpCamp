@@ -289,3 +289,29 @@
         iii. Then, when a user logs in from the forced login screen, 
                 if that param exists, redirect to it.
                 - delete the req.session.returnTo param after you set the redirecturl
+19. Adding authorization
+    a. To add authorization to our app, we need to associate an author to a campground,
+        or review, and then decide what authors can do to that review, and what other users
+        can do or see on that review.
+    b. Start with the model, we will store a reference to the user._id on our 
+        campground model. 
+        i. author: {
+            type: Schema.Types.ObjectId,
+            ref: "User",
+        },
+        ii. Now, if we want to display something about the author on the campground show
+            page, we need to populate the data for that author. On the campground show
+            route, populate the author. We can now access author data on any campground show page. 
+        iii. Once that is done, make sure you associate an new campground with the currently
+          logged in campground
+            - we have access the the user._id on our request from setting up authentication
+    c. Now lets make sure someone who isnt a campground owner can't delete someone
+        else's campground.
+        i. In our templates, we get currentUser from our req middleware, and we get
+            author._id from the campground
+                - make the delete/edit button on the template dissappear if 
+                    these dont match.
+                - in our conditional, we have to check if a user exists before continuing on to check
+                  the user id. If we try to check the id first and no one is signed in, it will be UNDEFINED
+                  and will break everything.
+        ii. 
