@@ -352,7 +352,20 @@
                 the review author._id, if not dont render that display button.
             - Next, youll want a middleware to protect the review delete route. Check to see if the
                 logged in user._id is the same as the author on the review. 
-
-            
+    e. So, all of that was difficult, but this is what makes apps useful to people. How your models relate to 
+       one another, what models you can edit, remove, add, and what people can see. Authentication, and authorization 
+       are difference between an application being a tool, and application being a business. 
+20. Using a controller pattern
+    a. Some of our routes are getting pretty crowded. We can move some of the functionality
+        onto a controller. 
+         i. Example, creating a campground takes like 5 steps. We can create a function
+            for this elsewhere, a "campground controller" and then pass that into our
+            routes.  
+    b. MVC pattern, Model View Controller application
+       i. All your model work happens in models, 
+       ii. All your rendered content is in views
+       iii. Controllers are the heart of the app. This is where the logic happens.
+    c.The basic Idea, is to take all "logic" out of your routes, and create very nicely
+        named functions in a different file and pass those into your routes.         
 
             
