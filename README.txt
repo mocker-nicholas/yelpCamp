@@ -366,6 +366,7 @@
        ii. All your rendered content is in views
        iii. Controllers are the heart of the app. This is where the logic happens.
     c.The basic Idea, is to take all "logic" out of your routes, and create very nicely
-        named functions in a different file and pass those into your routes.         
+        named functions in a different file and pass those into your routes.
+    d. Do this MVC restructing for all of your routes.          
 
             
