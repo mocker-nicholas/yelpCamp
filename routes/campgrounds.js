@@ -13,24 +13,20 @@ import {
   deleteCampground,
 } from "../controllers/campgrounds.js";
 
-router.get("/", catchAsync(index));
+router
+  .route("/")
+  .get(catchAsync(index))
+  .post(isLoggedIn, validateCampground, catchAsync(createCampground));
 
+// remember, this has to go before the id show route, or express thinks (new) is an id
 router.get("/new", isLoggedIn, renderNewForm);
 
-router.post("/", isLoggedIn, validateCampground, catchAsync(createCampground));
-
-router.get("/:id", catchAsync(showCampground));
+router
+  .route("/:id")
+  .get(catchAsync(showCampground))
+  .put(isLoggedIn, validateCampground, isAuthor, catchAsync(updateCampground))
+  .delete(isLoggedIn, isAuthor, catchAsync(deleteCampground));
 
 router.get("/:id/edit", isLoggedIn, isAuthor, catchAsync(renderEditForm));
-
-router.put(
-  "/:id",
-  isLoggedIn,
-  validateCampground,
-  isAuthor,
-  catchAsync(updateCampground)
-);
-
-router.delete("/:id", isLoggedIn, isAuthor, catchAsync(deleteCampground));
 
 export default router;

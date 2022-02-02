@@ -367,6 +367,15 @@
        iii. Controllers are the heart of the app. This is where the logic happens.
     c.The basic Idea, is to take all "logic" out of your routes, and create very nicely
         named functions in a different file and pass those into your routes.
-    d. Do this MVC restructing for all of your routes.          
-
+    d. Do this MVC restructing for all of your routes. 
+    e. Router.route... Whats this?
+        i. Its like sass... FOR ROUTES
+        ii. Router.route can identify a certain route, and dictate what logic is applied
+            on said route depending on what request is sent. 
+            - router.route("/users/:user_id") 
+                .all(logic goes in here)
+                .get(logic goes in here)
+                .post(etc....)          
+        iii. Once the logic is chained on to the req methods, you can get rid of the path
+                param in the chained on routes.
             

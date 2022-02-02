@@ -11,20 +11,18 @@ import {
 
 const router = express.Router();
 
-router.get("/register", renderRegister);
+router.route("/register").get(renderRegister).post(catchAsync(registerUser));
 
-router.post("/register", catchAsync(registerUser));
-
-router.get("/login", renderLogin);
-
-router.post(
-  "/login",
-  passport.authenticate("local", {
-    failureFlash: true,
-    failureRedirect: "/login",
-  }),
-  loginUser
-);
+router
+  .route("/login")
+  .get(renderLogin)
+  .post(
+    passport.authenticate("local", {
+      failureFlash: true,
+      failureRedirect: "/login",
+    }),
+    loginUser
+  );
 
 router.get("/logout", logoutUser);
 
