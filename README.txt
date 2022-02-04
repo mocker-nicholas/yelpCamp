@@ -386,4 +386,6 @@
         - upload.single() <-- pass in the name of the field we want to upload.
         - upload.array()
         - Uploading a file gives us a req.file object we can access in our route
-    d. 
+21. Cloudinary
+    a. This api requires an API Key. Use package dotenv to store variables in .env file
+    b. 
