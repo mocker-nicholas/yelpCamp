@@ -378,4 +378,12 @@
                 .post(etc....)          
         iii. Once the logic is chained on to the req methods, you can get rid of the path
                 param in the chained on routes.
-            
+20. Image Upload
+    a. Forms cant upload by default. You have to add an "enctype" "multipart/form-data"
+        attribute to the form itself
+    b. To parse the body on these types of forms we need a package called multer
+    c. Multer gives middleware to parse:
+        - upload.single() <-- pass in the name of the field we want to upload.
+        - upload.array()
+        - Uploading a file gives us a req.file object we can access in our route
+    d. 

@@ -1,7 +1,6 @@
 import express from "express";
-const router = express.Router();
 import catchAsync from "../util/catchasync.js";
-import Campground from "../models/campground.js";
+import multer from "multer";
 import { isLoggedIn, validateCampground, isAuthor } from "../middleware.js";
 import {
   index,
@@ -12,11 +11,16 @@ import {
   updateCampground,
   deleteCampground,
 } from "../controllers/campgrounds.js";
+const router = express.Router();
+const upload = multer({ dest: "uploads/" });
 
 router
   .route("/")
   .get(catchAsync(index))
-  .post(isLoggedIn, validateCampground, catchAsync(createCampground));
+  // .post(isLoggedIn, validateCampground, catchAsync(createCampground));
+  .post(upload.array("image"), (req, res) => {
+    console.log(req.body, req.files);
+  });
 
 // remember, this has to go before the id show route, or express thinks (new) is an id
 router.get("/new", isLoggedIn, renderNewForm);
