@@ -11,8 +11,9 @@ import {
   updateCampground,
   deleteCampground,
 } from "../controllers/campgrounds.js";
+import { cloudConfig, storage } from "../cloudinary/index.js";
 const router = express.Router();
-const upload = multer({ dest: "uploads/" });
+const upload = multer({ storage });
 
 router
   .route("/")

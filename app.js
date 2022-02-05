@@ -2,9 +2,6 @@ import dotenv from "dotenv";
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
-
-console.log(process.env.cloudname);
-
 import express from "express";
 import mongoose from "mongoose";
 import methodOverride from "method-override";
@@ -94,9 +91,9 @@ app.all("*", (req, res, next) => {
 });
 
 app.use((err, req, res, next) => {
-  const { statusCode = 500, message = "Something went wrong...." } = err;
+  const { statusCode = 500, message = "Not found" } = err;
   // the destructured default wont get passed through to our err object, so set that default manually.
-  if (!err.message) err.message("Oh No! Something went wrong!");
+  if (!err.message) err.message = "Oh No! Something went wrong!";
   res.status(statusCode).render("error", { err });
 });
 

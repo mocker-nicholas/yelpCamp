@@ -388,4 +388,7 @@
         - Uploading a file gives us a req.file object we can access in our route
 21. Cloudinary
     a. This api requires an API Key. Use package dotenv to store variables in .env file
-    b. 
+    b. To store images to cloudinary, we will use multer-storage-cloudinary
+        i. create a cloudinary folder or config file to import cloudinary
+        ii. import cloudinary and multer-storage-cloudinary
+            - 
