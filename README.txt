@@ -428,6 +428,12 @@
             - this is because multer is going to upload then send us the parsed body. If we dont 
                 upload and parse first, our campground and req.files is empty, so our validate sees images as empty.
     h. Loop over the images and display them in our show.ejs file for campgrounds. 
-
+22. Making a carousel for images
+    a. Copy and paste a bootstrap carousel
+    b. Loop over images and add image for each one in campground array
+        - use foreach for the above so you can snag the index. You have to add
+            and active class for the image to show, you want the active class
+            to show on the current index. 
+    c. Get rid of the buttons if you have 1 or less than 1 image. 
     
         
