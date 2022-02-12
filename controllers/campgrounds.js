@@ -10,10 +10,11 @@ export const renderNewForm = (req, res) => {
 };
 
 export const createCampground = async (req, res, next) => {
-  // this works, but we dont want to have to write logic for EVERYTHING. Use JOI for this.
-  // if (!req.body.campground)
-  //   throw new ExpressError(400, "Invalid Campground Data");
   const campground = new Campground(req.body.campground);
+  campground.images = req.files.map((f) => ({
+    url: f.path,
+    filename: f.filename,
+  }));
   campground.author = req.user._id;
   await campground.save();
   req.flash("success", "Sucessfully made new campground");

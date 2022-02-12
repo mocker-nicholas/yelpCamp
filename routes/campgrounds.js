@@ -18,11 +18,12 @@ const upload = multer({ storage });
 router
   .route("/")
   .get(catchAsync(index))
-  // .post(isLoggedIn, validateCampground, catchAsync(createCampground));
-  .post(upload.array("image"), (req, res) => {
-    console.log(req.body, req.files);
-    res.send("it worked");
-  });
+  .post(
+    isLoggedIn,
+    upload.array("image"),
+    validateCampground,
+    catchAsync(createCampground)
+  );
 
 // remember, this has to go before the id show route, or express thinks (new) is an id
 router.get("/new", isLoggedIn, renderNewForm);

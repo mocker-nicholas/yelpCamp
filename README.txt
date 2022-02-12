@@ -391,4 +391,43 @@
     b. To store images to cloudinary, we will use multer-storage-cloudinary
         i. create a cloudinary folder or config file to import cloudinary
         ii. import cloudinary and multer-storage-cloudinary
-            - 
+            - You cant actually use ES6 syntax to bring in cloudinary. Import the require() object
+                and require cloudinary().v2
+        iii. Create a seperate folder for your cloudinary setup. 
+        iv. Configure cloudinary to associate your account with this cloudinary instance:
+            - export const cloudConfig = cloudinary.config({
+                cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+                api_key: process.env.CLOUDINARY_KEY,
+                api_secret: process.env.CLOUDINARY_SECRET,
+                });
+        v. Set up a Cloudinary Storage instance:
+            - export const storage = new CloudinaryStorage({
+                cloudinary,
+                params: {
+                    folder: "YelpCamp",
+                    allowedFormats: ["jpeg", "png", "jpg"],
+                },
+                });
+    c. In the router you will be using to store files, bring in your Cloudinary Storage object, 
+        and change your multer upload to use that storage.
+    d. your cloudinary-multer-storage package will actually populate req.files with info coming back from cloudinary
+    e. now that we can see the req.files, we are going to want to save those file paths
+        and names
+        i. We will have to update our mongoose model to include params for this. And change our
+         Joi schema validation
+    f. Add in the image upload as a middlware for your campground post route.
+    g. go into your create campgrounds, loop over the array of files, take the params you want to store
+        and add them to the campground model you are creating. 
+         - you actually have to switch your route to this:
+            -   .post(
+                    isLoggedIn,
+                    upload.array("image"),
+                    validateCampground,
+                    catchAsync(createCampground)
+                );
+            - this is because multer is going to upload then send us the parsed body. If we dont 
+                upload and parse first, our campground and req.files is empty, so our validate sees images as empty.
+    h. Loop over the images and display them in our show.ejs file for campgrounds. 
+
+    
+        
