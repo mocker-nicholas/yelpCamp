@@ -435,5 +435,14 @@
             and active class for the image to show, you want the active class
             to show on the current index. 
     c. Get rid of the buttons if you have 1 or less than 1 image. 
-    
-        
+23. Add image upload to edit
+    a. Make your form enctype multipart/form-data
+    b. add upload.array('image') to you campground PUT route
+    c. add the image array to the form input
+    d. go to your update campground controller. Add logic for snaging images from req.files
+        and PUSH them onto the existing campground images array
+        - we cant push by mapping, because map will return an array. We told mongoose images would
+            be an array of objects, not and array of arrays. So we need to set our mapping of
+            images to variable, map over the images, and then spread that array into the campground
+    e. Multer is still taking care of everything and uploading to cloudinary and giving us
+        our req.files object we can access.

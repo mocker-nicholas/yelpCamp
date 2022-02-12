@@ -46,11 +46,20 @@ const seedDb = async () => {
     const camp = new Campground({
       title: `${descriptors[descriptorsSeed]} ${places[placeSeed]}`,
       location: `${cities[citySeed].city}, ${cities[citySeed].state}`,
-      imgUrl: await seedImg(),
       author: "61f562b2e959200a2cd79500",
       description:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, nihil tempora vel aspernatur quod aliquam illum! Iste impedit odio esse neque veniam molestiae eligendi commodi minus, beatae accusantium, doloribus quo!",
       price: price,
+      images: [
+        {
+          url: "https://res.cloudinary.com/dtk2pykqu/image/upload/v1644681546/YelpCamp/abd44dhftrcvmvk4inyn.png",
+          filename: "YelpCamp/abd44dhftrcvmvk4inyn",
+        },
+        {
+          url: "https://res.cloudinary.com/dtk2pykqu/image/upload/v1644681546/YelpCamp/abd44dhftrcvmvk4inyn.png",
+          filename: "YelpCamp/abd44dhftrcvmvk4inyn",
+        },
+      ],
     });
 
     await camp.save();
