@@ -1,4 +1,5 @@
 import Campground from "../models/campground.js";
+import { cloudinary } from "../cloudinary/index.js";
 
 export const index = async (req, res) => {
   const campgrounds = await Campground.find({});
@@ -49,6 +50,7 @@ export const renderEditForm = async (req, res, next) => {
 
 export const updateCampground = async (req, res) => {
   const { id } = req.params;
+  console.log(req.body);
   // because our form name is submitting information in a 'campground' object (name="campground[param]")
   // we can spread that object into our update req to match the params of the thing we are updating
   const campground = await Campground.findByIdAndUpdate(id, {
@@ -60,6 +62,14 @@ export const updateCampground = async (req, res) => {
   }));
   campground.images.push(...imgs);
   await campground.save();
+  if (req.body.deleteImages) {
+    for (let filename of req.body.deleteImages) {
+      await cloudinary.uploader.destroy(filename);
+    }
+    await campground.updateOne({
+      $pull: { images: { filename: { $in: req.body.deleteImages } } },
+    });
+  }
   req.flash("success", "Sucessfully updated campground");
   res.redirect(`/campgrounds/${campground._id}`);
 };

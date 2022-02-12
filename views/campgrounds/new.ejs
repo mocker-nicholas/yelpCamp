@@ -50,21 +50,6 @@
           <div class="valid-feedback">Almost there!</div>
         </div>
       </div>
-      <!-- <div class="mb-3">
-        <label class="form-label" for="image">Image Url</label>
-        <input
-          class="form-control"
-          type="text"
-          id="image"
-          name="campground[imgUrl]"
-          placeholder="Campground Image Url"
-          required
-        />
-        <div class="valid-feedback">You got this!</div>
-      </div> -->
-      <div class="mb-3">
-        <input type="file" name="image" id="" multiple />
-      </div>
       <div class="mb-3">
         <label class="form-label" for="description">Description</label>
         <textarea
@@ -76,6 +61,18 @@
           required
         ></textarea>
         <div class="valid-feedback">Nailed it!</div>
+      </div>
+      <div class="mb-3">
+        <div class="mb-3">
+          <label for="image" class="form-label">Upload Images</label>
+          <input
+            name="image"
+            class="form-control"
+            type="file"
+            id="image"
+            multiple
+          />
+        </div>
       </div>
       <div class="mb-3">
         <button class="btn btn-success">Add Campground</button>

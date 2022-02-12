@@ -446,3 +446,32 @@
             images to variable, map over the images, and then spread that array into the campground
     e. Multer is still taking care of everything and uploading to cloudinary and giving us
         our req.files object we can access.
+    f. IN REALITY WE NEED TO LIMIT THE IMAGE SIZE, AMOUNT, VALIDATION, ETC... NOT working
+        THESE THINGS OUT CAN COST YOU A TON OF MONEY
+24. Delete Images
+    a. display images on campground edit template by looping through them and assinging
+        ids via the index.
+    b. Assign a value to each checkbox as the path to the image. We will use this to delete them
+        from cloudinary
+        - you will need to add deleteImages[] to your joi schema
+        - now, we update a campground, we have this coming through to our update route:
+            i.  campground: [Object: null prototype] {
+                title: 'new upload',
+                location: 'new upload',
+                price: '5',
+                description: 'sdgl;jkng;dsfngdkjfnglkdsjf'
+            },
+            deleteImages: [ 'YelpCamp/sdgd1vvfe5jsccwcbdbm', 'YelpCamp/ln6dptfmmbnrnc5smel8' ]
+            }
+    c. Deleting from the backend
+        i. In our update route, to remove them from mongoose:
+            - await campground.save();
+                if (req.body.deleteImages) {
+                    await campground.updateOne({
+                    $pull: { images: { filename: { $in: req.body.deleteImages } } },
+                });
+        ii. Now we have to get rid of the images in cloudinary
+            - When you check to see if deleteImages[] exists:
+                -     for (let filename of req.body.deleteImages) {
+                        await cloudinary.uploader.destroy(filename);
+                    }

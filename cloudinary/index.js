@@ -4,7 +4,7 @@ if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 const require = createRequire(import.meta.url);
-const cloudinary = require("cloudinary").v2;
+export const cloudinary = require("cloudinary").v2;
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 export const cloudConfig = cloudinary.config({
