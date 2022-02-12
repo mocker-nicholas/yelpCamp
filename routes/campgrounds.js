@@ -21,6 +21,7 @@ router
   // .post(isLoggedIn, validateCampground, catchAsync(createCampground));
   .post(upload.array("image"), (req, res) => {
     console.log(req.body, req.files);
+    res.send("it worked");
   });
 
 // remember, this has to go before the id show route, or express thinks (new) is an id

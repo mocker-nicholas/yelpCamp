@@ -1,9 +1,11 @@
 import dotenv from "dotenv";
+import { createRequire } from "module";
 if (process.env.NODE_ENV !== "production") {
   dotenv.config();
 }
 
-import cloudinary from "cloudinary";
+const require = createRequire(import.meta.url);
+const cloudinary = require("cloudinary").v2;
 import { CloudinaryStorage } from "multer-storage-cloudinary";
 
 export const cloudConfig = cloudinary.config({
@@ -14,6 +16,8 @@ export const cloudConfig = cloudinary.config({
 
 export const storage = new CloudinaryStorage({
   cloudinary,
-  folder: "YelpCamp",
-  allowedFormats: ["jpeg", "png", "jpg"],
+  params: {
+    folder: "YelpCamp",
+    allowedFormats: ["jpeg", "png", "jpg"],
+  },
 });
