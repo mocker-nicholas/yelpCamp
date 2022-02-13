@@ -484,3 +484,7 @@
     that is already stored on the fly
  d. Once you make a thumbnail virtual on our image in our campground model, you can now access
     that virtual in your ejs template.
+
+25. Adding maps
+    a. We can use mapbox geocoding API to get lat and lon for our location on the campground. 
+    b. 

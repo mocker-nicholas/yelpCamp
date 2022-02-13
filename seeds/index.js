@@ -46,7 +46,7 @@ const seedDb = async () => {
     const camp = new Campground({
       title: `${descriptors[descriptorsSeed]} ${places[placeSeed]}`,
       location: `${cities[citySeed].city}, ${cities[citySeed].state}`,
-      author: "61f562b2e959200a2cd79500",
+      author: "6207c91ea943aa4c34e63efa",
       description:
         "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Debitis, nihil tempora vel aspernatur quod aliquam illum! Iste impedit odio esse neque veniam molestiae eligendi commodi minus, beatae accusantium, doloribus quo!",
       price: price,
