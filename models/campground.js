@@ -3,15 +3,20 @@ import Review from "./review.js";
 
 // You can make a little shortcut for the mongoose schema method
 const Schema = mongoose.Schema;
-// define your model schema
+// define your model schemas
+
+const ImageSchema = new Schema({
+  url: String,
+  filename: String,
+});
+
+ImageSchema.virtual("thumbnail").get(function () {
+  return this.url.replace("/upload", "/upload/w_200/h_200");
+});
+
 const CampgroundSchema = new Schema({
   title: String,
-  images: [
-    {
-      url: String,
-      filename: String,
-    },
-  ],
+  images: [ImageSchema],
   location: String,
   price: Number,
   description: String,

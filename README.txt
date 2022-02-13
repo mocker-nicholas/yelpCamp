@@ -475,3 +475,12 @@
                 -     for (let filename of req.body.deleteImages) {
                         await cloudinary.uploader.destroy(filename);
                     }
+25. Cloudinary's transformation API for thumbnail images
+ a. cloudinary allows us to put params in our url to contstrain images to certain sizes.
+ b. to add this params into urls we can add a virtual onto our schema for the images. This means
+    we actually need to split our campground up into a campground schema, and an image schema, and
+    put the virtual on the image schema itself
+ c. Virtuals are not actually stored on the database, it is just derived from a property
+    that is already stored on the fly
+ d. Once you make a thumbnail virtual on our image in our campground model, you can now access
+    that virtual in your ejs template.

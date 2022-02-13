@@ -50,7 +50,6 @@ export const renderEditForm = async (req, res, next) => {
 
 export const updateCampground = async (req, res) => {
   const { id } = req.params;
-  console.log(req.body);
   // because our form name is submitting information in a 'campground' object (name="campground[param]")
   // we can spread that object into our update req to match the params of the thing we are updating
   const campground = await Campground.findByIdAndUpdate(id, {
