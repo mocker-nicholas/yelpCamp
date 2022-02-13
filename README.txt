@@ -500,3 +500,13 @@
         i. This API actually gives us data in a geoJSON format. This is its own thing
             sort of a subset of JSON. Mongoose has docs on how to add this to a model. 
             hey call it "location"
+        ii. add the response to your mapbox call to your model as "geometry"
+    e. Mapbox gl js
+        i. Include the CDN in the ejs file for your map. 
+        ii. Youll have to create a public JS file, and declare your token in your ejs file
+        iii. Then you can access your map token in your public js file for the map. 
+        iv. do the same thing with your campground. We need the campground to be accessible 
+            on the front end to make our calls to the mapbox gl js library. Declare it as a variable
+            on the backend, and turn it into a JSON object so it is readable on the front end. 
+            
+
