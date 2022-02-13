@@ -487,4 +487,16 @@
 
 25. Adding maps
     a. We can use mapbox geocoding API to get lat and lon for our location on the campground. 
-    b. 
+    b. Mapbox has a node client we can use rather than using a get request. mapbox/sdk
+    c. Youll have to import:
+        i. import mbxGeocoding from "@mapbox/mapbox-sdk/services/geocoding.js";
+        ii. Initialize geocoding instance:
+            - const geocoder = mbxGeocoding({ accessToken: mapBoxToken });
+        iii. send request to get location data in your route
+            -   const geoData = await geocoder
+                    .forwardGeocode({ query: req.body.campground.location, limit: 1 })
+                    .send();
+    d. geoJSON
+        i. This API actually gives us data in a geoJSON format. This is its own thing
+            sort of a subset of JSON. Mongoose has docs on how to add this to a model. 
+            hey call it "location"
