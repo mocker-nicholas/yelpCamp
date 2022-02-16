@@ -508,5 +508,20 @@
         iv. do the same thing with your campground. We need the campground to be accessible 
             on the front end to make our calls to the mapbox gl js library. Declare it as a variable
             on the backend, and turn it into a JSON object so it is readable on the front end. 
-            
+    f. Add map popup
+        i. in your public js file for the map, use the setpopup() method   
+26. Cluster Mapbox
+    a. Set your access token in public JS file, then, instatiate a new map. 
+    b. Use map.on('load'), set your campgrounds to the data option
+        - youll have to turn your campgrounds into an object with a "features" key, 
+            because that is what mapbox expects
+    c. You can now play around with the methods mapbox has available. Decide circle, colors size, border, text
+        - Tell mapbox what text to display in circles
+        - decide when camps cluster or not
+27. Adding popups to our map markers
+    a. We want to add camp information to our cluster map. Each individual dot should have the camp info
+    b. Mapbox expects your data to have a features object, and each feature has an object for properties, and geometry
+    c. To make an object like that on our campground schema, we can add a virtual
 
+
+const campground = <%-JSON.stringify(campground)%>
