@@ -522,6 +522,4 @@
     a. We want to add camp information to our cluster map. Each individual dot should have the camp info
     b. Mapbox expects your data to have a features object, and each feature has an object for properties, and geometry
     c. To make an object like that on our campground schema, we can add a virtual
-
-
-const campground = <%-JSON.stringify(campground)%>
+    d. 
