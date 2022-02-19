@@ -522,4 +522,22 @@
     a. We want to add camp information to our cluster map. Each individual dot should have the camp info
     b. Mapbox expects your data to have a features object, and each feature has an object for properties, and geometry
     c. To make an object like that on our campground schema, we can add a virtual
-    d. 
+
+28. Common Security Issues
+    a. Mongo Injection
+        i. Because of the way mongo queries are structured, if you have something like
+            - db.users.find({username: req.body.username});
+        ii. someone can make {"$gt": ""} their username, and the resulting query will return ALL usernames
+        iii. To avoid this type of attack, we can sanitize all user inputs, taking out
+            the special characters used in mongo queries.
+            - npm express-mongoose-sanitize
+    b. Cross Site Scripting XXS
+        i. xxs-game is a short into to cross site scripting. Go play it.
+        ii. You can set an img element in someones browser, set the source to your server,
+            and set an output attribute on it as the viewer's cookie for example.
+        iii. EJS tags actually escape html, so this helps a little bit. 
+        iv. We will need to sanatize user inputs with joi. We can create a joi
+            extension to escape any html.
+        
+
+### FIX PRODUCTION BUG IN ISAUTHOR MIDDLEWARE ###

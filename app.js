@@ -18,6 +18,7 @@ import flash from "connect-flash";
 import passport from "passport";
 import LocalStrategy from "passport-local";
 import User from "./models/user.js";
+import mongoSanitize from "express-mongo-sanitize";
 
 // set express to a variable for initialization
 const app = express();
@@ -64,6 +65,11 @@ passport.deserializeUser(User.deserializeUser());
 app.use(express.urlencoded({ extended: true }));
 // use method-override
 app.use(methodOverride("_method"));
+app.use(
+  mongoSanitize({
+    replaceWith: "_",
+  })
+);
 // serve static assests
 app.use(express.static(path.join(__dirname, "public")));
 // enable flash
