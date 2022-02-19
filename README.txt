@@ -538,6 +538,12 @@
         iii. EJS tags actually escape html, so this helps a little bit. 
         iv. We will need to sanatize user inputs with joi. We can create a joi
             extension to escape any html.
-        
-
-### FIX PRODUCTION BUG IN ISAUTHOR MIDDLEWARE ###
+    c. You can protect your cookies as well
+        i. set http only to make the cookie not accessible by javascript.
+        ii. set secure to true, cookies will only work over https
+        iii. change your session name from connect.sid
+    d. Dont display your stack track in errors if you are in production.
+    e. Using Helmet
+        i. if you app.use(helmet()) helmet will enable all 11 middleware it uses to protect
+            your app. 
+        ii. We will actually need to configure it to allow outside sources (Lots of cache clearing to test this)
