@@ -20,6 +20,7 @@ import LocalStrategy from "passport-local";
 import User from "./models/user.js";
 import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
+// const dbUrl = process.env.DB_URL;
 
 // set express to a variable for initialization
 const app = express();
@@ -28,6 +29,7 @@ const __filename = fileURLToPath(import.meta.url);
 // set dirname to path to the current file, lets us use __dirname in a module
 const __dirname = path.dirname(__filename);
 // Connect to mongoose and check for connection errors
+// mongodb://localhost:27017/yelp-camp
 async function connectDb() {
   try {
     await mongoose.connect("mongodb://localhost:27017/yelp-camp");

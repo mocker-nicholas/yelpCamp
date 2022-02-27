@@ -547,3 +547,9 @@
         i. if you app.use(helmet()) helmet will enable all 11 middleware it uses to protect
             your app. 
         ii. We will actually need to configure it to allow outside sources (Lots of cache clearing to test this)
+29. Deployment
+    a. Sign up for MongoAtlas
+    b. create a cluster (free)
+    c. Make a cluster user. 
+    d. get the url for your cluster, set as an env variable, add to your connectDb function.
+    
