@@ -68,6 +68,7 @@
   </div>
 </div>
 <div class="col-6">
+  <div id="map"></div>
   <% if(currentUser) { %>
   <h2>Leave a review!</h2>
   <form
@@ -132,7 +133,6 @@
     </div>
   </div>
   <%}%>
-  <div id="map"></div>
 </div>
 <script>
   const mapToken = "<%-process.env.MAPBOX_TOKEN%>"
