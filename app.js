@@ -22,8 +22,8 @@ import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
 import MongoStore from "connect-mongo";
 
-// const prodDbUrl = process.env.DB_URL;
-const devDbUrl = "mongodb://localhost:27017/yelp-camp";
+const dbUrl = process.env.DB_URL || "mongodb://localhost:27017/yelp-camp";
+const secret = process.env.STORE_SECRET || "developmentenvsecret";
 
 // set express to a variable for initialization
 const app = express();
@@ -35,7 +35,7 @@ const __dirname = path.dirname(__filename);
 // mongodb://localhost:27017/yelp-camp
 async function connectDb() {
   try {
-    await mongoose.connect(devDbUrl);
+    await mongoose.connect(dbUrl);
     console.log("DATABASE CONNECTED");
   } catch (e) {
     console.log("CONNECTION ERROR", e);
@@ -51,10 +51,10 @@ app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 // store
 const store = MongoStore.create({
-  mongoUrl: devDbUrl,
+  mongoUrl: dbUrl,
   touchAfter: 24 * 60 * 60,
   crypto: {
-    secret: process.env.STORE_SECRET,
+    secret: secret,
   },
 });
 
@@ -66,7 +66,7 @@ store.on("error", function (e) {
 const sessionConfig = {
   store: store,
   name: "session",
-  secret: process.env.STORE_SECRET,
+  secret: secret,
   resave: false,
   saveUninitialized: true,
   cookie: {

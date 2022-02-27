@@ -565,3 +565,9 @@
                 });
         iv. setup a method to catch store errors
         v. pass your store into your session config object. 
+    c. Heroku
+        i. command: heroku login
+         - follow prompt to open browser and login
+        ii. command heroku create
+         - this makes us a new app on heroku for our app. Make sure you are in top level of app 
+            when you run this command. 
