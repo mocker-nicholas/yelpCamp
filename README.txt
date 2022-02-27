@@ -571,3 +571,15 @@
         ii. command heroku create
          - this makes us a new app on heroku for our app. Make sure you are in top level of app 
             when you run this command. 
+        iii. git push heroku master
+            -- wait for build to complete
+        iv. to see heroku errors:
+            - heroku logs --tail
+            - by default, heroku is going to look for a "start" script in package.json
+            - add "start": "node app.js" to your scripts.
+        v. change to port you are serving on for heroku
+         - heroku defaults to 80 
+            - const port = process.env.PORT || 3000;
+                app.listen(port, () => {
+                console.log("Serving on port 3000");
+                });
