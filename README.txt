@@ -572,7 +572,8 @@
          - this makes us a new app on heroku for our app. Make sure you are in top level of app 
             when you run this command. 
         iii. git push heroku master
-            -- wait for build to complete
+            - stage and commit all changes first!!!
+            - wait for build to complete
         iv. to see heroku errors:
             - heroku logs --tail
             - by default, heroku is going to look for a "start" script in package.json
@@ -583,3 +584,5 @@
                 app.listen(port, () => {
                 console.log("Serving on port 3000");
                 });
+        vi. Configure environment variables before you push (youll get "cannot find token" error if you dont)
+            - app -> settings -> config VARS
