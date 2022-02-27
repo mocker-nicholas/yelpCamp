@@ -549,7 +549,19 @@
         ii. We will actually need to configure it to allow outside sources (Lots of cache clearing to test this)
 29. Deployment
     a. Sign up for MongoAtlas
-    b. create a cluster (free)
-    c. Make a cluster user. 
-    d. get the url for your cluster, set as an env variable, add to your connectDb function.
-    
+        b. create a cluster (free)
+        c. Make a cluster user. 
+        d. get the url for your cluster, set as an env variable, add to your connectDb function.
+    b. Configure session (store)
+        i. download and import connect-mongo
+        ii. execute it and pass in your session as an argument.
+        iii. configuring the store is different than the video now:
+            - const store = MongoStore.create({
+                mongoUrl: devDbUrl,
+                touchAfter: 24 * 60 * 60, <---- only update session if information is different, or, after this set amount of time, hours, minutes, seconds
+                crypto: {
+                    secret: process.env.STORE_SECRET,
+                    },
+                });
+        iv. setup a method to catch store errors
+        v. pass your store into your session config object. 

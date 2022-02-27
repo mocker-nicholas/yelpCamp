@@ -20,7 +20,10 @@ import LocalStrategy from "passport-local";
 import User from "./models/user.js";
 import mongoSanitize from "express-mongo-sanitize";
 import helmet from "helmet";
-// const dbUrl = process.env.DB_URL;
+import MongoStore from "connect-mongo";
+
+// const prodDbUrl = process.env.DB_URL;
+const devDbUrl = "mongodb://localhost:27017/yelp-camp";
 
 // set express to a variable for initialization
 const app = express();
@@ -32,7 +35,7 @@ const __dirname = path.dirname(__filename);
 // mongodb://localhost:27017/yelp-camp
 async function connectDb() {
   try {
-    await mongoose.connect("mongodb://localhost:27017/yelp-camp");
+    await mongoose.connect(devDbUrl);
     console.log("DATABASE CONNECTED");
   } catch (e) {
     console.log("CONNECTION ERROR", e);
@@ -46,10 +49,24 @@ app.engine("ejs", ejsMate);
 app.set("view engine", "ejs");
 // set views directory
 app.set("views", path.join(__dirname, "views"));
+// store
+const store = MongoStore.create({
+  mongoUrl: devDbUrl,
+  touchAfter: 24 * 60 * 60,
+  crypto: {
+    secret: process.env.STORE_SECRET,
+  },
+});
+
+// store errors
+store.on("error", function (e) {
+  console.log("Session Store Error:", e);
+});
 // session
 const sessionConfig = {
+  store: store,
   name: "session",
-  secret: "mysecret",
+  secret: process.env.STORE_SECRET,
   resave: false,
   saveUninitialized: true,
   cookie: {
