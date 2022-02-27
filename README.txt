@@ -586,3 +586,6 @@
                 });
         vi. Configure environment variables before you push (youll get "cannot find token" error if you dont)
             - app -> settings -> config VARS
+            - YOU HAVE TO WHITELIST ALL IPS ON ATLAS, WITHOUT DOING SO YOUR HEROKU APP
+                CANNOT GET YOUR SESSION FROM MONGO, AND THERE IS NO "currentUser"
+                - always "heroku restart" after you change stuff in Mongo;
