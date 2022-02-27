@@ -586,6 +586,10 @@
                 });
         vi. Configure environment variables before you push (youll get "cannot find token" error if you dont)
             - app -> settings -> config VARS
+            - in your .env these things will be strings (wrapped in quotes), if you input values
+                wrapped in quotes in Heroku it breaks them. Heroku will automatically stringify these
+                values, so leave the quotes off. 
             - YOU HAVE TO WHITELIST ALL IPS ON ATLAS, WITHOUT DOING SO YOUR HEROKU APP
                 CANNOT GET YOUR SESSION FROM MONGO, AND THERE IS NO "currentUser"
-                - always "heroku restart" after you change stuff in Mongo;
+                - always "heroku restart" after you change stuff in Mongo
+
